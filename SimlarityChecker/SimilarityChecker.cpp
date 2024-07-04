@@ -28,24 +28,39 @@ public:
 
 	int compareAlpha(string str1, string str2) {
 		for (auto ch : str1) {
-			if (appearAlpha[ch - 'A'] == 0) {
-				appearAlpha[ch - 'A'] = 1;
-				totalCnt++;
-			}
+			checkInvalidCharacter(ch);
+			calTotalCount(ch);
 		}
 		for (auto ch : str2) {
-			if (appearAlpha[ch - 'A'] == 1) 
-				sameCnt++;
-			if (appearAlpha[ch - 'A'] == 0) {
-				appearAlpha[ch - 'A'] = 1;
-				totalCnt++;
-			}
+			calSameCount(ch);
+			calTotalCount(ch);
 		}
 		int score = sameCnt * ALPHA_SCORE_MAX / totalCnt;
 		totalScore += score;
 		return score;
 	}
+	
 private:
+	void checkInvalidCharacter(char ch)
+	{
+		if (!(ch >= 'A' && ch <= 'Z'))
+			throw invalid_argument("String should consist of capital letters.");
+	}
+	
+	void calSameCount(char ch)
+	{
+		if (appearAlpha[ch - 'A'] == 1)
+			sameCnt++;
+	}
+	
+	void calTotalCount(char ch)
+	{
+		if (appearAlpha[ch - 'A'] == 0) {
+			appearAlpha[ch - 'A'] = 1;
+			totalCnt++;
+		}
+	}
+
 	const int LENGTH_SCORE_MAX = 60;
 	const int LENGTH_SCORE_MIN = 0;
 	const int ALPHA_SCORE_MAX = 40;
@@ -58,5 +73,4 @@ private:
 	int appearAlpha[NUM_OF_ALPHABET] ;
 	int totalCnt;
 	int sameCnt;
-
 };

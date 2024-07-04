@@ -3,6 +3,7 @@
 
 using namespace std;
 
+// length checker
 TEST(SimilarityCheckerTest, sameLength) {
 	SimilarityChecker sc;
 	int actual = sc.compareLength("ABC", "ABC");
@@ -21,6 +22,26 @@ TEST(SimilarityCheckerTest, partiallySame) {
 
 	actual = sc.compareLength("ABCDE", "XYZ");
 	EXPECT_EQ(actual, 20);
+}
+// alhpabet checker
+TEST(SimilarityCheckerTest, notCapital) {
+	try {
+		SimilarityChecker sc;
+		sc.compareAlpha("abc", "ABC");
+		FAIL();
+	}
+	catch (exception& e){
+	}
+}
+
+TEST(SimilarityCheckerTest, notCapital2) {
+	try {
+		SimilarityChecker sc;
+		sc.compareAlpha("1", "ABC");
+		FAIL();
+	}
+	catch (exception& e) {
+	}
 }
 
 TEST(SimilarityCheckerTest, alphabet) {
