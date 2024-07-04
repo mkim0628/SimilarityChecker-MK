@@ -32,6 +32,7 @@ public:
 			calTotalCount(ch);
 		}
 		for (auto ch : str2) {
+			checkInvalidCharacter(ch);
 			calSameCount(ch);
 			calTotalCount(ch);
 		}
