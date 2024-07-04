@@ -62,7 +62,7 @@ TEST(SimilarityCheckerTest, notCapital3) {
 
 TEST(SimilarityCheckerTest, alphabet) {
 	SimilarityChecker sc;
-	int actual = sc.compareAlpha("ABC", "ABC");
+	int actual = sc.compareAlpha("AABAA", "ABBBAAA");
 	EXPECT_EQ(actual, 40);
 }
 

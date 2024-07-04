@@ -4,7 +4,8 @@ using namespace std;
 class SimilarityChecker {
 public:
 	
-	SimilarityChecker() : totalScore{ 0 }, appearAlpha{ {0} }, totalCnt{ 0 }, sameCnt{ 0 } {};
+	SimilarityChecker() : totalScore{ 0 }, totalCntFlags{ {0} }, 
+		sameCntFlags{ {0} }, totalCnt { 0 }, sameCnt{ 0 } {};
 	
 	int compareLength(string str1, string str2) {
 		if (str1.length() > str2.length()) {
@@ -42,22 +43,21 @@ public:
 	}
 	
 private:
-	void checkInvalidCharacter(char ch)
-	{
-		if (!(ch >= 'A' && ch <= 'Z'))
+	void checkInvalidCharacter(char ch) {
+		if (ch < 'A' || ch > 'Z')
 			throw invalid_argument("String should consist of capital letters.");
 	}
 	
-	void calSameCount(char ch)
-	{
-		if (appearAlpha[ch - 'A'] == 1)
+	void calSameCount(char ch) {
+		if (totalCntFlags[ch - 'A'] == 1 && sameCntFlags[ch - 'A'] == 0) {
 			sameCnt++;
+			sameCntFlags[ch - 'A'] = 1;
+		}
 	}
 	
-	void calTotalCount(char ch)
-	{
-		if (appearAlpha[ch - 'A'] == 0) {
-			appearAlpha[ch - 'A'] = 1;
+	void calTotalCount(char ch)	{
+		if (totalCntFlags[ch - 'A'] == 0) {
+			totalCntFlags[ch - 'A'] = 1;
 			totalCnt++;
 		}
 	}
@@ -71,7 +71,8 @@ private:
 	int totalScore;
 	int shortStrLength;
 	int longStrLength;
-	int appearAlpha[NUM_OF_ALPHABET] ;
+	int totalCntFlags[NUM_OF_ALPHABET];
+	int sameCntFlags[NUM_OF_ALPHABET] ;
 	int totalCnt;
 	int sameCnt;
 };
